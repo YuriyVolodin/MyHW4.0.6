@@ -1,6 +1,7 @@
 package ru.netology.iqa116.page;
 
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.Condition;
 import ru.netology.iqa116.data.DataHelper;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -12,7 +13,7 @@ public class VerificationPage {
     private SelenideElement errorNotification = $("[data-test-id=error-notification]");
 
     public VerificationPage() {
-        codeInput.shouldBe(); // проверка загрузки страницы ввода кода
+        codeInput.shouldBe();
     }
 
     public DashboardPage validVerify(DataHelper.VerificationCode code) {
@@ -24,7 +25,7 @@ public class VerificationPage {
     public void invalidVerify(DataHelper.VerificationCode code) {
         codeInput.setValue(code.getCode());
         verifyButton.click();
-        errorNotification.shouldBe();
+        errorNotification.shouldBe(Condition.visible);
     }
 
     public String getErrorText() {
