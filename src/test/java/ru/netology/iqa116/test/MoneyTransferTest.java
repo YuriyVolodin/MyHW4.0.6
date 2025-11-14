@@ -6,8 +6,8 @@ import ru.netology.iqa116.data.DataHelper;
 import ru.netology.iqa116.page.DashboardPage;
 import ru.netology.iqa116.page.LoginPage1;
 
-
 import static com.codeborne.selenide.Selenide.open;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MoneyTransferTest {
 
@@ -35,6 +35,8 @@ public class MoneyTransferTest {
         int firstCardBalanceAfter = dashboardPage.getCardBalance(DataHelper.getFirstCardInfo());
         int secondCardBalanceAfter = dashboardPage.getCardBalance(DataHelper.getSecondCardInfo());
 
+        assertEquals(firstCardBalanceBefore - transferAmount, firstCardBalanceAfter);
+        assertEquals(secondCardBalanceBefore + transferAmount, secondCardBalanceAfter);
     }
 
     @Test
@@ -50,9 +52,7 @@ public class MoneyTransferTest {
         int firstCardBalanceAfter = dashboardPage.getCardBalance(DataHelper.getFirstCardInfo());
         int secondCardBalanceAfter = dashboardPage.getCardBalance(DataHelper.getSecondCardInfo());
 
-        if (firstCardBalanceAfter != firstCardBalanceBefore ||
-                secondCardBalanceAfter != secondCardBalanceBefore) {
-            throw new AssertionError("❌ Баланс изменился, хотя переведена сумма больше доступной");
-        }
+        assertEquals(firstCardBalanceBefore, firstCardBalanceAfter);
+        assertEquals(secondCardBalanceBefore, secondCardBalanceAfter);
     }
 }

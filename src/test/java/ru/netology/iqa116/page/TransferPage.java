@@ -37,7 +37,9 @@ public class TransferPage {
         return clickTransferButton();
     }
 
-    public void shouldShowError() {
-        errorNotification.shouldBe(com.codeborne.selenide.Condition.visible);
+    public void shouldShowError(String expectedText) {
+        errorNotification
+                .shouldBe(Condition.visible)
+                .shouldHave(Condition.text(expectedText));
     }
 }
