@@ -23,20 +23,21 @@ public class MoneyTransferTest {
     }
 
     @Test
-    void shouldTransferMoneyFromFirstToSecondCard() {
+    void shouldTransferMoneyFromSecondToFirstCard() {
         int firstCardBalanceBefore = dashboardPage.getCardBalance(DataHelper.getFirstCardInfo());
         int secondCardBalanceBefore = dashboardPage.getCardBalance(DataHelper.getSecondCardInfo());
 
-        int transferAmount = firstCardBalanceBefore / 10;
+        int transferAmount = secondCardBalanceBefore / 10;
 
-        var transferPage = dashboardPage.selectCard(DataHelper.getSecondCardInfo());
-        dashboardPage = transferPage.transfer(DataHelper.getFirstCardInfo(), transferAmount);
+        var transferPage = dashboardPage.selectCard(DataHelper.getFirstCardInfo());
+
+        dashboardPage = transferPage.transfer(DataHelper.getSecondCardInfo(), transferAmount);
 
         int firstCardBalanceAfter = dashboardPage.getCardBalance(DataHelper.getFirstCardInfo());
         int secondCardBalanceAfter = dashboardPage.getCardBalance(DataHelper.getSecondCardInfo());
 
-        assertEquals(firstCardBalanceBefore - transferAmount, firstCardBalanceAfter);
-        assertEquals(secondCardBalanceBefore + transferAmount, secondCardBalanceAfter);
+        assertEquals(firstCardBalanceBefore + transferAmount, firstCardBalanceAfter);
+        assertEquals(secondCardBalanceBefore - transferAmount, secondCardBalanceAfter);
     }
 
     @Test
